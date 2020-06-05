@@ -65,6 +65,7 @@
 <script>
 import loginService from "@/services/loginService"
 import ModalCadastro from "@/views/ModalCadastro"
+import authService from "@/services/authService"
 export default {
   name: 'Home',
   components: {ModalCadastro},
@@ -85,6 +86,8 @@ export default {
   }),
   methods: {
     efetuarLogin(){
+      authService.getNewToken()
+        
       if(!this.$refs.form.validate()){
         return;
       }
