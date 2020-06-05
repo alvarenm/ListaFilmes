@@ -63,6 +63,9 @@ export default {
       senha: "",
       nome: "",
       nascimento: "",
+      listaFilmes: {},
+      login: false,
+      id: '',
     },
     email_rules: [
       v => !!v || "Informe um email"
@@ -74,14 +77,21 @@ export default {
     ],
     mask: {
       nascimento: "##/##/####"
-    }
+    },
+    showRegisterModal: false
   }),
   methods: {
+    limparCampos(){
+      this.novaConta = {}
+    },
     cadastrar(){
        if(!this.$refs.form.validate()){
         return;
     }
-    loginService.efetuarCadastro(this.novaConta)
+    var res = loginService.efetuarCadastro(this.novaConta);
+    if (res){
+      window.alert("Bem vindo")
+    }
 
   }
 
