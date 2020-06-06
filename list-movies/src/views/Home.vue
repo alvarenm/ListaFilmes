@@ -5,33 +5,47 @@
               Lista Filmes
 
       </v-app-bar>
+          <div>
           <h1 id="p1">
               Procure por um filme
           </h1>
             <br/>
-      <div id="movies-search">
-          <div>
-              
-          <v-text-field
-          outlined
-          placeholder="Busque por um filme"
-          v-model='termo'
-          ></v-text-field>
+                <v-text-field
+                outlined
+                placeholder="Busque por um filme"
+                v-model='termo'
+                ></v-text-field>    
           <v-btn
           dark
           @click="buscaFilmes(termo)"
           >Buscar</v-btn>
           </div>
           <br/>
-          <br/>
-        <div>
-        <div>
-           <!-- INSERIR AQUI IMAGEM PARA CRIAR TEMPLATE PARA UTILIZAR NO V-FOR !-->
-        </div>
-        </div>
-              
+      <div id="movies-search">
+          <v-card>
+            <v-row>
+            <v-col cols="3">
+              <v-card-title>
+                  {{"aff"}}
+              </v-card-title>
+            <v-spacer></v-spacer>
+              <v-card-text>
+                <v-img
+                    src ="http://image.tmdb.org/t/p/original//8j0myrRCU5WTtaReeJ6jrytzuYp.jpg"
+                    alt=''
+                    width="130px"
+                    /> 
+              </v-card-text>
+                </v-col>
+                <v-col cols="6">
+                   <v-card-text>
+                       Aqui vai a descrição
+                   </v-card-text>
+                </v-col>
+                </v-row>
+          </v-card>
+        
       </div>
-      
   </v-container>
   
 </template>
@@ -43,13 +57,15 @@ export default {
     data: () => ({
 
         termo: '',
-        //const baseURL = 'http://image.tmdb.org/t/p/'
+
     }),
 
     methods: {
         buscaFilmes(termo){
-            movieService.getFilmes(termo);
+            
+           console.log(movieService.getFilmes(termo))
         }
+
     },
     
     mounted() {
