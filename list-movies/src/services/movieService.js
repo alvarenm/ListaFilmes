@@ -12,8 +12,8 @@ export default {
             console.log(err)
         })
     },
-    getFilmesPopulares(){
-        http.get(`movie/popular?api_key=${api_key}&language=pt-BR&page=1`
+    getFilmes(termo){
+        http.get(`search/movie?api_key=${api_key}&language=pt-BR&query=${termo}&page=1`
         )
         .then(
             res => {
