@@ -62,8 +62,8 @@ export default {
 
     methods: {
         buscaFilmes(termo){
-            
-           console.log(movieService.getFilmes(termo))
+            console.log("o termo buscado foi: " + termo)
+            return movieService.getFilmes(termo)
         }
 
     },
