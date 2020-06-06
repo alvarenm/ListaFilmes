@@ -11,5 +11,17 @@ export default {
         .catch(err => {
             console.log(err)
         })
+    },
+    getFilmesPopulares(){
+        http.get(`movie/popular?api_key=${api_key}&language=pt-BR&page=1`
+        )
+        .then(
+            res => {
+                console.log(res.data)
+            }
+        )
+        .catch(err => {
+            console.log(err.data)
+        })
     }
 }

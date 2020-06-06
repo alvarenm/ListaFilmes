@@ -55,6 +55,7 @@
 </template>
 <script>
 import loginService from "@/services/loginService"
+import router from '@/router'
 export default {
   name: "ModalCadastro",
   data: () => ({
@@ -91,6 +92,11 @@ export default {
     var res = loginService.efetuarCadastro(this.novaConta);
     if (res){
       window.alert("Bem vindo")
+      let autenticado =loginService.login(this.novaConta)
+      if(autenticado.login){
+        router.push({name:'home', params: {id: autenticado.id}})
+      }
+      
     }
 
   }

@@ -24,14 +24,14 @@ export default{
                 return false;
             }
         }
-        novaConta.id = (acc.length) - 1
+        novaConta.id = (acc.length) + 1
         acc.push(novaConta)
         console.log(acc)
         return true
         
     },
     verificaLogin(id){
-        for(let i = 0; i < acc.length; i++){
+        for(let i = 0;  i < acc.length; i++){
             if(acc[i].id == id){
                 if(acc[i].login){
                     return true;
