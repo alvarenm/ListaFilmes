@@ -1,9 +1,31 @@
 <template>
   <v-container>
-      <v-app-bar color="rgb(104, 105, 106)" flat app>
-          <v-spacer></v-spacer>
-              Lista Filmes
-
+      <v-app-bar id="appbar" color="rgb(104, 105, 106)" flat app>
+          <v-row>
+              <h4>Lista Filmes</h4>
+            </v-row>
+            <v-row>
+                <v-btn
+                icon
+                ><v-icon>mdi-magnify</v-icon>
+                Busca de filmes
+                </v-btn>
+            </v-row>
+            <v-row>
+              <v-btn
+              icon
+              ><v-icon>mdi-popcorn</v-icon>
+              Minha Lista de Filmes
+              </v-btn>
+            </v-row>
+            <v-row>
+            <v-btn
+              icon
+              @click="goHome()"
+              ><v-icon>mdi-check</v-icon>
+              Meus filmes assistidos
+              </v-btn>
+            </v-row>
       </v-app-bar>
           <div>
           <h1 id="p1">
@@ -14,6 +36,7 @@
                 outlined
                 placeholder="Busque por um filme"
                 v-model='termo'
+                @keydown.enter="buscaFilmes(termo)"
                 ></v-text-field>    
           <v-btn
           dark
@@ -21,7 +44,8 @@
           >Buscar</v-btn>
           </div>
           <br/>
-      <div id="movies-search" >
+          <v-container v-if="getDone">
+              <div id="movies-search" >
           <v-card v-for="filme in filmes" :key="filme.index" tile>
             <v-row>
             <v-col cols="4">
@@ -79,6 +103,8 @@
 
         
       </div>
+          </v-container>
+      
   </v-container>
   
 </template>
@@ -86,39 +112,41 @@
 <script>
 import loginService from "@/services/loginService"
 import movieService from '@/services/movieService'
+import router from "@/router"
 export default {
     data: () => ({
         id: '',
         termo: '',
         aux: '',
-        filmes: [{
-        isFull:false
-        }],
+        filmes: [{}],
+        getDone: false,
        
        buscaFilmes(termo){
          this.aux = movieService.getFilmes(termo)
          this.aux.then(
              res => {
-                 this.filmes = res.data.results
-                 console.log(this.filmes)
+                this.filmes = res.data.results
+                this.getDone = true
              }
          )
         },
+
         adicionaLista(id, idFilme){
             loginService.inserirLista(id,idFilme)
         },
+
         adicionaAssistido(id, idFilme){
             loginService.inserirAssistido(id,idFilme)
-        }
+        },
 
+        goHome(){
+            router.push({name: 'home', params: {id: this.$route.params.id}})
+        }
     }),
     mounted() {
 
         loginService.verificaLogin(this.$route.params.id)
         this.id = this.$route.params.id
-        console.log(this.id)
-        
-        
     }
 
 }
@@ -133,5 +161,8 @@ export default {
 }
 #botao2{
     padding-top: 10px;
+}
+#appbar{
+    align-items: left;
 }
 </style>
