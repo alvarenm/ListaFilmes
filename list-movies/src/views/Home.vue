@@ -50,7 +50,7 @@
                     <v-row id="botao1" justify="center">
                         <v-btn
                         dark
-                        @click="adicionaLista(this.id,filme.id)"
+                        @click="adicionaLista($route.params.id,filme.id)"
                         >
                             <v-icon>
                                 mdi-popcorn
@@ -63,6 +63,7 @@
                     <v-row id="botao2" justify="center">
                         <v-btn
                             dark
+                            @click="adicionaAssistido($route.params.id, filme.id)"
                         >
                             <v-icon>
                                 mdi-check
@@ -104,7 +105,10 @@ export default {
          )
         },
         adicionaLista(id, idFilme){
-            movieService.inserirLista(id, idFilme)
+            loginService.inserirLista(id,idFilme)
+        },
+        adicionaAssistido(id, idFilme){
+            loginService.inserirAssistido(id,idFilme)
         }
 
     }),
@@ -112,6 +116,7 @@ export default {
 
         loginService.verificaLogin(this.$route.params.id)
         this.id = this.$route.params.id
+        console.log(this.id)
         
         
     }

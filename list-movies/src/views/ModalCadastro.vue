@@ -64,9 +64,10 @@ export default {
       senha: "",
       nome: "",
       nascimento: "",
-      listaFilmes: {},
+      listaFilmes: [],
       login: false,
       id: '',
+      listaAssistidos: [],
     },
     email_rules: [
       v => !!v || "Informe um email"
