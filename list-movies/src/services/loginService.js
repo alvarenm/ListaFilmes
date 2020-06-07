@@ -41,5 +41,15 @@ export default{
 
             }
         }
+    },
+    inserirLista(id, idFilme){
+        for(let i = 0;  i < acc.length; i++){
+            if(acc[i].id == id){
+                acc[i].listaFilmes.push(idFilme)
+                console.log(acc[i].listaFilmes)
+                return
+            }
+        }
+
     }
 }

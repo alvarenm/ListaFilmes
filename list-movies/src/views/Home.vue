@@ -21,29 +21,61 @@
           >Buscar</v-btn>
           </div>
           <br/>
-      <div id="movies-search">
-          <v-card>
+      <div id="movies-search" >
+          <v-card v-for="filme in filmes" :key="filme.index" tile>
             <v-row>
-            <v-col cols="3">
+            <v-col cols="4">
               <v-card-title>
-                  {{"aff"}}
+                  {{filme.title}}
               </v-card-title>
             <v-spacer></v-spacer>
               <v-card-text>
                 <v-img
-                    src ="http://image.tmdb.org/t/p/original//8j0myrRCU5WTtaReeJ6jrytzuYp.jpg"
+                    :src ="`http://image.tmdb.org/t/p/original/${filme.poster_path}`" 
                     alt=''
-                    width="130px"
+                    width="140px"
                     /> 
               </v-card-text>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="5">
                    <v-card-text>
-                       Aqui vai a descrição
+                       <br/>
+                       <br/>
+                       <br/>
+                       {{filme.overview}}
                    </v-card-text>
                 </v-col>
+                <br/>   
+                <v-col cols = "3">
+                    <v-row id="botao1" justify="center">
+                        <v-btn
+                        dark
+                        @click="adicionaLista(this.id,filme.id)"
+                        >
+                            <v-icon>
+                                mdi-popcorn
+                            </v-icon>
+                            Colocar na lista
+                        </v-btn> 
+                    </v-row>
+                    <br/>
+                    <v-spacer/>
+                    <v-row id="botao2" justify="center">
+                        <v-btn
+                            dark
+                        >
+                            <v-icon>
+                                mdi-check
+                            </v-icon>
+                            Marcar como visto
+                        </v-btn>
+                    </v-row>
+                </v-col>
                 </v-row>
+                <v-spacer/>
           </v-card>
+
+
         
       </div>
   </v-container>
@@ -55,21 +87,32 @@ import loginService from "@/services/loginService"
 import movieService from '@/services/movieService'
 export default {
     data: () => ({
-
+        id: '',
         termo: '',
-
-    }),
-
-    methods: {
-        buscaFilmes(termo){
-            console.log("o termo buscado foi: " + termo)
-            return movieService.getFilmes(termo)
+        aux: '',
+        filmes: [{
+        isFull:false
+        }],
+       
+       buscaFilmes(termo){
+         this.aux = movieService.getFilmes(termo)
+         this.aux.then(
+             res => {
+                 this.filmes = res.data.results
+                 console.log(this.filmes)
+             }
+         )
+        },
+        adicionaLista(id, idFilme){
+            movieService.inserirLista(id, idFilme)
         }
 
-    },
-    
+    }),
     mounted() {
+
         loginService.verificaLogin(this.$route.params.id)
+        this.id = this.$route.params.id
+        
         
     }
 
@@ -79,5 +122,11 @@ export default {
 <style>
 #p1{
     text-align: center;
+}
+#botao1{
+    padding-top: 80px;
+}
+#botao2{
+    padding-top: 10px;
 }
 </style>
