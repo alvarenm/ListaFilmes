@@ -14,6 +14,16 @@ Vue.use(VueRouter)
     path: '/home/:id',
     name: 'home',
     component: () => import (/* webpackChunkName: "home" */'../views/Home.vue')
+  },
+  {
+    path: '/lista/:id',
+    name: 'lista',
+    component: () => import(/* webpackChunkName: "lista" */'../views/ListaFilmes.vue')
+  },
+  {
+    path: '/assistidos/:id',
+    name: 'assistidos',
+    component: () => import(/* webpackChunkName: "assistidos" */'../views/ListaAssistidos.vue')
   }
 ]
 

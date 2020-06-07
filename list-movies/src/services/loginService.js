@@ -15,7 +15,21 @@ export default{
        }
         window.alert("Favor insira novamente os dados")
     },
-
+    getConta(id){
+        for(let i=0;i<acc.length; i++){
+            if(acc[i].id == id){
+                return acc[i]
+            }
+        }
+    },
+    getLista(id){
+        for(var i = 0; i<acc.length; i++){
+            if(acc[i].id == id){
+                console.log(acc[i].listaAssistidos)
+                return acc[i].listaAssistidos
+            }
+        }
+    },
     efetuarCadastro(novaConta){
         for(let i = 0; i < acc.length; i++){
             if(acc[i].email == novaConta.email){
@@ -44,35 +58,48 @@ export default{
         router.push({name: 'login', params: {}})
     },
 
-    inserirLista(id, idFilme){
+    inserirLista(id, movie){
+        var filme = {
+            title: movie.title,
+            poster_path: movie.poster_path,
+            overview: movie.overview,
+            id: movie.id
+        }
         for(let i = 0;  i < acc.length; i++){
             if(acc[i].id == id){
                 for(let j = 0; j <acc[i].listaFilmes.length; j++){
-                    if(idFilme == acc[i].listaFilmes[j]){
+                    if(movie.id == acc[i].listaFilmes[j].id){
                         window.alert("Filme ja esta na lista")
                         return
                     }
                 }
-                acc[i].listaFilmes.push(idFilme)
+
+                acc[i].listaFilmes.push(filme)
                 window.alert("Filme adicionado a sua lista")
                 return
             }
         }
 
     },
-    inserirAssistido(id, idFilme){
+    inserirAssistido(id, movie){
+        var filme = {
+            title: movie.title,
+            poster_path: movie.poster_path,
+            overview: movie.overview,
+            id: movie.id
+        }
         for(let i = 0;  i < acc.length; i++){
             if(acc[i].id == id){
                 for(let j = 0; j <acc[i].listaAssistidos.length; j++){
-                    if(idFilme == acc[i].listaAssistidos[j]){
+                    if(movie.id == acc[i].listaAssistidos[j].id){
                         window.alert("Filme ja esta na lista de assistidos")
                         return
                     }
                     
                 }
                 for(let k = 0; k< acc[i].listaFilmes.length; k++){
-                    if(idFilme == acc[i].listaFilmes[k]){
-                        acc[i].listaAssistidos.push(idFilme)
+                    if(movie.id == acc[i].listaFilmes[k].id){
+                        acc[i].listaAssistidos.push(filme)
                         window.alert("Filme adicionado a sua lista de assistidos")
                         return
                     }
@@ -82,5 +109,5 @@ export default{
             }
         }
 
-    }
+    },
 }
