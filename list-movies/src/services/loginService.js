@@ -25,7 +25,13 @@ export default{
     getLista(id){
         for(var i = 0; i<acc.length; i++){
             if(acc[i].id == id){
-                console.log(acc[i].listaAssistidos)
+                return acc[i].listaFilmes
+            }
+        }
+    },
+    getListaAssistidos(id){
+        for(var i = 0; i<acc.length; i++){
+            if(acc[i].id == id){
                 return acc[i].listaAssistidos
             }
         }

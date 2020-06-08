@@ -31,10 +31,54 @@
       </v-app-bar>
       
       <v-row align="center" justify="center">
-          <h4>Lista de filmes do {{conta.nome}}</h4>
+          <h4>Lista de filmes de {{conta.nome}}</h4>
       </v-row>
       <v-spacer/>
       <v-spacer/>
+      <v-container v-if="val">
+          <v-card v-for="filme in filmes" :key="filme.index" tile>
+            <v-row v-if="filme.id != null">
+            <v-col cols="4">
+              <v-card-title>
+                  {{filme.title}}
+              </v-card-title>
+            <v-spacer></v-spacer>
+              <v-card-text>
+                <v-img
+                    :src ="`http://image.tmdb.org/t/p/original/${filme.poster_path}`" 
+                    alt=''
+                    width="140px"
+                    /> 
+              </v-card-text>
+                </v-col>
+                <v-col cols="5">
+                   <v-card-text>
+                       <br/>
+                       <br/>
+                       <br/>
+                       {{filme.overview}}
+                   </v-card-text>
+                </v-col>
+                <br/>   
+                <v-col cols = "3">
+                    <br/>
+                    <v-spacer/>
+                    <v-row id="botao2" justify="center">
+                        <v-btn
+                            dark
+                            @click="adicionaAssistido($route.params.id, filme)"
+                        >
+                            <v-icon>
+                                mdi-check
+                            </v-icon>
+                            Marcar como visto
+                        </v-btn>
+                    </v-row>
+                </v-col>
+                </v-row>
+                <v-spacer/>
+          </v-card>        
+      </v-container>
     </v-container>
 </template>
 <script>
@@ -45,7 +89,7 @@ export default {
     data: () => ({
         conta: [],
         filmes: [],
-        aux: '',
+        val: false,
 
         goHome(){
             router.push({name: 'home', params: {id: this.$route.params.id}})
@@ -58,13 +102,21 @@ export default {
         goAssistidos(){
             router.push({name: 'assistidos', params: {id: this.$route.params.id}})
         },
+
+        adicionaAssistido(id, filme){
+            loginService.inserirAssistido(id,filme)
+        },
     }),
 
     mounted() {
         loginService.verificaLogin(this.$route.params.id)
         this.conta = loginService.getConta(this.$route.params.id)
-        this.filmes = loginService.getLista(this.conta)
-        console.log(this.filmes)
+        if(this.conta.listaFilmes.length > 1){
+            this.filmes = loginService.getLista(this.conta.id)
+            this.val = true
+        }
+
+
     },
     methods: {
 
@@ -73,5 +125,7 @@ export default {
 </script>
 
 <style>
-
+#botao2{
+    padding-top: 90px;
+}
 </style>

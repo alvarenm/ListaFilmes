@@ -137,8 +137,8 @@ export default {
             loginService.inserirLista(id,idFilme)
         },
 
-        adicionaAssistido(id, idFilme){
-            loginService.inserirAssistido(id,idFilme)
+        adicionaAssistido(id, filme){
+            loginService.inserirAssistido(id,filme)
         },
        goHome(){
             router.push({name: 'home', params: {id: this.$route.params.id}})
